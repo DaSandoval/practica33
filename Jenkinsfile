@@ -1,19 +1,21 @@
-pipeline {
+pipeline{
   agent any
 
-  stages {
-    stage ('Build') {
+  stages{
+    stage('Build'){
       steps {
         sh './quickstart/gradlew clean assemble -p quickstart'
       }
     }
-    stage ('Testing') {
-      steps {
+
+    stage('Testing'){
+      steps{
         sh './quickstart/gradlew test -p quickstart'
           junit '**/build/test-results/test/*.xml'
         }
       }
-    stage ('Publish') {
+
+    stage('Publish'){
       steps {
         sh './quickstart/gradlew uploadArchives -p quickstart'
           archiveArtifacts artifacts: '**/repos/*.jar'
