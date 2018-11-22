@@ -3,7 +3,7 @@ pipeline{
 
   stages{
     stage('Build'){
-      steps {
+      steps{
         sh './quickstart/gradlew clean assemble -p quickstart'
       }
     }
@@ -11,16 +11,15 @@ pipeline{
     stage('Testing'){
       steps{
         sh './quickstart/gradlew test -p quickstart'
-          junit '**/build/test-results/test/*.xml'
-        }
-      }
-
-    stage('Publish'){
-      steps {
-        sh './quickstart/gradlew uploadArchives -p quickstart'
-          archiveArtifacts artifacts: '**/repos/*.jar'
-        }
+        junit '**/build/test-results/test/*.xml'
       }
     }
+
+    stage('Publish'){
+      steps{
+        sh './quickstart/gradlew uploadArchives -p quickstart'
+        archiveArtifacts artifacts: '**/repos/*.jar'
+      }
+    }    
   }
 }
